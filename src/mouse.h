@@ -42,10 +42,6 @@
 
 #include "xf86Xinput.h"
 
-#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) < 18
-#define LogMessageVerbSigSafe LogMessageVerb
-#endif
-
 /* Mouse interface classes */
 #define MSE_NONE        0x00
 #define MSE_SERIAL      0x01            /* serial port */
