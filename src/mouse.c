@@ -175,9 +175,7 @@ _X_EXPORT InputDriverRec MOUSE = {
 	.UnInit			= NULL,
 	.module			= NULL,
 	.default_options	= NULL,
-#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) >= 21
 	.capabilities		= 0
-#endif
 };
 
 #define RETRY_COUNT 4

@@ -127,18 +127,13 @@ static int CheckRelToAbs(InputInfoPtr pInfo);
 static int CheckRelToAbsWalker(di_node_t node, void *arg);
 
 #ifdef HAVE_ABSOLUTE_MOUSE_SCALING
-# include "compat-api.h"
 
 static void vuidMouseSendScreenSize(ScreenPtr pScreen, VuidMsePtr pVuidMse);
-static void vuidMouseAdjustFrame(ADJUST_FRAME_ARGS_DECL);
+static void vuidMouseAdjustFrame(ScrnInfoPtr pScrn, int x, int y);
 
 static unsigned long vuidMouseGeneration = 0;
 
-#if HAS_DEVPRIVATEKEYREC
 static DevPrivateKeyRec vuidMouseScreenIndex;
-#else
-static int vuidMouseScreenIndex;
-#endif /* HAS_DEVPRIVATEKEYREC */
 
 #define vuidMouseGetScreenPrivate(s) ( \
     dixLookupPrivate(&(s)->devPrivates, &vuidMouseScreenIndex))
@@ -603,9 +598,8 @@ static void vuidMouseSendScreenSize(ScreenPtr pScreen, VuidMsePtr pVuidMse)
     }
 }
 
-static void vuidMouseAdjustFrame(ADJUST_FRAME_ARGS_DECL)
+static void vuidMouseAdjustFrame(ScrnInfoPtr pScrn, int x, int y)
 {
-      SCRN_INFO_PTR(arg);
       ScreenPtr         pScreen = xf86ScrnToScreen(pScrn);
       xf86AdjustFrameProc *wrappedAdjustFrame
           = (xf86AdjustFrameProc *) vuidMouseGetScreenPrivate(pScreen);
@@ -614,7 +608,7 @@ static void vuidMouseAdjustFrame(ADJUST_FRAME_ARGS_DECL)
 
       if (wrappedAdjustFrame) {
           pScrn->AdjustFrame = wrappedAdjustFrame;
-          (*pScrn->AdjustFrame)(ADJUST_FRAME_ARGS(pScrn, x, y));
+          (*pScrn->AdjustFrame)(pScrn, x, y);
           pScrn->AdjustFrame = vuidMouseAdjustFrame;
       }
 
@@ -670,10 +664,8 @@ vuidMouseProc(DeviceIntPtr pPointer, int what)
     case DEVICE_INIT:
 #ifdef HAVE_ABSOLUTE_MOUSE_SCALING
 
-#if HAS_DEVPRIVATEKEYREC
         if (!dixRegisterPrivateKey(&vuidMouseScreenIndex, PRIVATE_SCREEN, 0))
                 return BadAlloc;
-#endif  /* HAS_DEVPRIVATEKEYREC */
 
         if (vuidMouseGeneration != serverGeneration) {
                 for (i = 0; i < screenInfo.numScreens; i++) {
