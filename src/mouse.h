@@ -30,6 +30,16 @@
 #ifndef _XF86OSMOUSE_H_
 #define _XF86OSMOUSE_H_
 
+#include <X11/Xfuncproto.h>
+
+#ifndef _X_FALLTHROUGH /* xproto < 7.0.34 */
+# if  __has_attribute(fallthrough)
+#  define _X_FALLTHROUGH __attribute__((fallthrough))
+# else
+#  define _X_FALLTHROUGH (void)0
+# endif
+#endif
+
 #include "xf86Xinput.h"
 
 #if GET_ABI_MAJOR(ABI_XINPUT_VERSION) < 18

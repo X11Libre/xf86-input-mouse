@@ -752,7 +752,7 @@ vuidMouseProc(DeviceIntPtr pPointer, int what)
             if (m != NULL)
                 m->next = pVuidMse->next;
         }
-        /* fallthrough */
+        _X_FALLTHROUGH; /* fallthrough */
     case DEVICE_OFF:
         if (pInfo->fd != -1) {
             if (pVuidMse->strmod) {

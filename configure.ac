@@ -48,7 +48,7 @@ XORG_WITH_LINT
 AC_CHECK_FUNCS([asprintf timingsafe_memcmp])
 
 # Obtain compiler/linker options from server and required extensions
-PKG_CHECK_MODULES(XORG, [xorg-server >= 1.10] xproto inputproto)
+PKG_CHECK_MODULES(XORG, [xorg-server >= 1.10 xproto >= 7.0.27 inputproto])
 
 # Define a configure option for an alternate input module directory
 AC_ARG_WITH(xorg-module-dir,

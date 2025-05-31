@@ -361,7 +361,7 @@ MouseCommonOptions(InputInfoPtr pInfo)
                 xf86Msg(X_WARNING, "DragLock: Invalid button number = %d\n",
                         lock);
                 break;
-            };
+            }
             /* turn into a button mask */
             lockM = 1 << (lock - 1);
 
@@ -592,7 +592,7 @@ MouseCommonOptions(InputInfoPtr pInfo)
                xf86Msg(X_WARNING,
                        "ButtonMapping: Invalid button number = %d\n", b);
                break;
-           };
+           }
            pMse->buttonMap[n++] = 1 << (b-1);
            if (b > pMse->buttons) pMse->buttons = b;
        }
@@ -711,10 +711,10 @@ ProtocolIDToName(MouseProtocolID id)
     switch (id) {
     case PROT_UNKNOWN:
         return "Unknown";
-        break;
+
     case PROT_UNSUP:
         return "Unsupported";
-        break;
+
     default:
         for (i = 0; mouseProtocols[i].name; i++)
             if (id == mouseProtocols[i].id)
@@ -732,7 +732,7 @@ ProtocolIDToClass(MouseProtocolID id)
     case PROT_UNKNOWN:
     case PROT_UNSUP:
         return MSE_NONE;
-        break;
+
     default:
         for (i = 0; mouseProtocols[i].name; i++)
             if (id == mouseProtocols[i].id)
@@ -749,7 +749,7 @@ GetProtocol(MouseProtocolID id) {
     case PROT_UNKNOWN:
     case PROT_UNSUP:
         return NULL;
-        break;
+
     default:
         for (i = 0; mouseProtocols[i].name; i++)
             if (id == mouseProtocols[i].id) {
@@ -968,7 +968,7 @@ MousePreInit(InputDriverPtr drv, InputInfoPtr pInfo, int flags)
     xf86CloseSerial(pInfo->fd);
     pInfo->fd = -1;
 
-    if (!(mPriv = (pointer) calloc(1, sizeof(mousePrivRec))))
+    if (!(mPriv = calloc(1, sizeof(mousePrivRec))))
     {
         rc = BadAlloc;
         goto out;
@@ -1214,7 +1214,7 @@ MouseReadInput(InputInfoPtr pInfo)
                 case PROT_GLIDE:
                 case PROT_THINKING:
                     buttons |= ((int)(u & 0x10) >> 1);
-                    /* fall through */
+                    _X_FALLTHROUGH; /* fall through */
 
                 default:
                     buttons |= ((int)(u & 0x20) >> 4) |
@@ -2626,13 +2626,13 @@ SetupMouse(InputInfoPtr pInfo)
 /*
  * Do a reset wrap mode before reset.
  */
-#define do_ps2Reset(x)  { \
+#define do_ps2Reset(x)  do { \
     int i = RETRY_COUNT;\
      while (i-- > 0) { \
        xf86FlushInput(x->fd); \
        if (ps2Reset(x)) break; \
     } \
-  }
+  } while (0)
 
 
 static Bool
@@ -3215,6 +3215,11 @@ createProtoList(MouseDevPtr pMse, MouseProtocolID *protoList)
         AP_DBGC(("%2.2x ", (unsigned char) mPriv->data[i]));
     AP_DBGC(("\n"));
 
+    if (protoList == NULL) {
+        AP_DBG(("Skipping probe, protoList is NULL"));
+        return;
+    }
+
 #if HAVE_THREADED_INPUT
     input_lock();
 #else
@@ -3411,13 +3416,13 @@ validCount(mousePrivPtr mPriv, Bool inSync, Bool lostSync)
     return STATE_INVALID;
 }
 
-#define RESET_VALIDATION        mPriv->goodCount = PROBE_UNCERTAINTY;\
+#define RESET_VALIDATION   do { mPriv->goodCount = PROBE_UNCERTAINTY; \
                                 mPriv->badCount = 0;\
                                 mPriv->prevDx = 0;\
                                 mPriv->prevDy = 0;\
                                 mPriv->accDx = 0;\
                                 mPriv->accDy = 0;\
-                                mPriv->acc = 0;
+                                mPriv->acc = 0; } while (0)
 
 static void
 autoProbeMouse(InputInfoPtr pInfo, Bool inSync, Bool lostSync)
@@ -3636,7 +3641,7 @@ autoGood(MouseDevPtr pMse)
     case AUTOPROBE_H_VALIDATE2:
         if (mPriv->goodCount < PROBE_UNCERTAINTY/2)
             return TRUE;
-        /* FALLTHROUGH */
+        _X_FALLTHROUGH; /* FALLTHROUGH */
     default:
         return FALSE;
     }
