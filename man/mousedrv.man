@@ -1,8 +1,8 @@
 .\" shorthand for double quote that works everywhere.
 .ds q \N'34'
-.TH MOUSE __drivermansuffix__ __vendorversion__
+.TH MOUSE __drivermansuffix__ 2025-04-22 __vendorversion__
 .SH NAME
-mouse \- __xservername__ mouse input driver
+mouse \- Xorg mouse input driver
 .SH SYNOPSIS
 .nf
 .B "Section \*qInputDevice\*q"
@@ -16,7 +16,7 @@ mouse \- __xservername__ mouse input driver
 .SH DESCRIPTION
 .B mouse
 is an
-.B __xservername__
+.B Xorg
 input driver for mice.
 The driver supports most available mouse types and interfaces,
 though the level of support for types of mice depends on the OS.
@@ -48,7 +48,7 @@ manufacturers.
 Despite the wide range of variations, there have been relatively
 few protocols (data format) with which the serial mouse talks
 to the host computer.
-
+.IP
 The modern serial mouse conforms to the PnP COM device specification
 so that the host computer can automatically detect the mouse
 and load an appropriate driver.
@@ -74,13 +74,13 @@ remember that the connector at the very end of the mouse/adapter pair is
 what matters.
 .SH CONFIGURATION DETAILS
 Depending on the X server version in use, input device options may be set
-in either a __xconfigfile__ file, an xorg.conf.d snippet,
+in either a xorg.conf file, an xorg.conf.d snippet,
 or in the configuration files read by the Hardware Abstraction Layer (HAL)
 daemon,
 .BR hald (1).
 .PP
 Please refer to
-.BR __xconfigfile__ (__filemansuffix__)
+.BR xorg.conf (__filemansuffix__)
 for general configuration details
 and for options that can be used with all input drivers.
 This section only covers configuration details specific to this driver.
@@ -184,10 +184,10 @@ Default: 10.
 .TP 7
 .BI "Option \*qEmulateWheelTimeout\*q \*q" integer \*q
 Specifies the time in milliseconds the
-.BR EmulateWheelButton
+.B EmulateWheelButton
 must be pressed before wheel emulation is started.
 If the
-.BR EmulateWheelButton
+.B EmulateWheelButton
 is released before this timeout,
 the original button press/release event is sent.
 Default: 200.
@@ -212,9 +212,9 @@ is mapped to the negative Y axis motion and button number
 is mapped to the positive Y axis motion.
 Default: no mapping.
 .TP 7
-.BI "Option \*qZAxisMapping\*q \*qX\*q"
+.B "Option \*qZAxisMapping\*q \*qX\*q"
 .TP 7
-.BI "Option \*qZAxisMapping\*q \*qY\*q"
+.B "Option \*qZAxisMapping\*q \*qY\*q"
 .TP 7
 .BI "Option \*qZAxisMapping\*q \*q" "N1 N2" \*q
 .TP 7
@@ -255,7 +255,7 @@ This transformation is applied after the
 .BR InvX ,
 .BR InvY ,
 and
-.BR AngleOffset
+.B AngleOffset
 transformations.
 Default: off.
 .TP 7
@@ -336,12 +336,12 @@ There are some other options that may be used to control various parameters
 for serial port communication, but they are not documented here because
 the driver sets them correctly for each mouse protocol type.
 .SH "SEE ALSO"
-.BR __xservername__ (__appmansuffix__),
-.BR __xconfigfile__ (__filemansuffix__),
+.BR Xorg (__appmansuffix__),
+.BR xorg.conf (__filemansuffix__),
 .BR Xserver (__appmansuffix__),
 .BR X (__miscmansuffix__),
 .BR README.mouse .
-
+.sp
 .BR hal (__miscmansuffix__),
 .BR hald (__adminmansuffix__),
 .BR fdi (__filemansuffix__).
