@@ -16,6 +16,8 @@
      3.5 NetBSD/pc98
      3.6 OpenBSD
      3.7 Solaris & illumos
+     3.8 Linux
+     3.9 Linux/98
 
   4. Configuring Your Mouse
   5. xorg.conf Options
@@ -48,9 +50,10 @@
 
 
   This document describes mouse support in the xf86-input-mouse driver
-  for the Xorg X server. This driver is used on non-Linux operating
-  systems such as BSD & Solaris, as modern Linux systems use the
-  xf86-input-evdev or xf86-input-libinput drivers instead.
+  for the Xorg X server.   This driver is mainly used on non-Linux
+  operating systems such as BSD & Solaris, as modern Linux systems use
+  the xf86-input-evdev or xf86-input-libinput drivers instead.
+
 
   Mouse configuration has often been mysterious task for novice users.
   However, once you learn several basics, it is straightforward to write
@@ -144,6 +147,9 @@
   NetBSD/pc98       Ok        ?         Ok        NA        NA         NA
   OpenBSD           Ok        Ok        Ok        Ok*1      Ok*1       Ok*1
   Solaris           Ok        NA*1      ?*1       Ok        Ok         SP*1
+  Linux             Ok        Ok        Ok        Ok        Ok         ?
+  Linux/98          Ok        ?         Ok        NA        NA         ?
+
 
   Ok: support is available,  NA: not available, ?: untested or unknown.
   SP: support is available in a different form
@@ -255,6 +261,16 @@
   and the appropriate "/dev/usb/hid" device with the
        Option "StreamsModule" "usbms"
   line included in the associated "InputDevice" section.
+
+
+  3.8.  Linux
+
+  All protocol types should work.
+
+
+  3.9.  Linux/98
+
+  The PS/2 mouse is not supported.
 
 
 

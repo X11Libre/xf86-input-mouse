@@ -32,7 +32,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/include $(XORG_CFLAGS)
 
 # We have to list all the mouse drivers here, even if we don't build them, so
 # they get included in distcheck.
-OS_SRCS = bsd_mouse.c hurd_mouse.c sun_mouse.c
+OS_SRCS = bsd_mouse.c hurd_mouse.c lnx_mouse.c sun_mouse.c
 
 @DRIVER_NAME@_drv_la_SOURCES = \
 	mouse.c \

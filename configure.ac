@@ -72,7 +72,7 @@ AC_SUBST([sdkdir])
 # Work out which OS mouse driver we need to build
 case $host_os in
   linux*)
-    AC_MSG_ERROR([This is not the mouse driver you are looking for. Use evdev or libinput.])
+    OS_MOUSE_NAME=lnx
     ;;
   freebsd*|kfreebsd*-gnu|dragonfly*|netbsd*|openbsd*)
     OS_MOUSE_NAME=bsd
