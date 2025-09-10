@@ -49,7 +49,11 @@
 #include "usb.h"
 #endif
 
-#include <dev/usb/usb.h>
+#ifdef __DragonFly__
+# include <bus/u4b/usb.h>
+#else
+# include <dev/usb/usb.h>
+#endif
 #ifdef USB_GET_REPORT_ID
 #define USB_NEW_HID
 #endif
