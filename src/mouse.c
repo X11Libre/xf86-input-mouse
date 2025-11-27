@@ -80,6 +80,10 @@
 #include "mousePriv.h"
 #include "mipointer.h"
 
+#ifndef sign
+#define sign(x) ((x) < 0 ? -1 : ((x) > 0 ? 1 : 0))
+#endif
+
 enum {
     /* number of bits in mapped nibble */
     NIB_BITS=4,
