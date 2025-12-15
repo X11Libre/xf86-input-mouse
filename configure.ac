@@ -23,7 +23,7 @@
 # Initialize Autoconf
 AC_PREREQ([2.60])
 AC_INIT([xlibre-xf86-input-mouse],
-        [1.9.5],
+        [1.9.6],
         [https://github.com/X11Libre/xf86-input-mouse/issues],
         [xlibre-xf86-input-mouse])
 AC_CONFIG_SRCDIR([Makefile.am])
