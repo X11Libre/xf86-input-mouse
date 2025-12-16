@@ -126,26 +126,14 @@ typedef struct _DragLockRec {
 } DragLockRec, *DragLockPtr;
 
 
-#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) >= 23
-#define HAVE_THREADED_INPUT	1
-#endif
-
-#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) >= 24
-#define BLOCK_HANDLER_ARGS     	void *data, void *waitTime
-#define WAKEUP_HANDLER_ARGS	void *data, int i
-#else
-#define BLOCK_HANDLER_ARGS	pointer data, struct timeval **waitTime, pointer LastSelectMask
-#define WAKEUP_HANDLER_ARGS	void *data, int i, pointer LastSelectMask
-#endif
-
 static int MousePreInit(InputDriverPtr drv, InputInfoPtr pInfo, int flags);
 static int MouseProc(DeviceIntPtr device, int what);
 static void MouseCtrl(DeviceIntPtr device, PtrCtrl *ctrl);
 static void MousePostEvent(InputInfoPtr pInfo, int buttons,
                            int dx, int dy, int dz, int dw);
 static void MouseReadInput(InputInfoPtr pInfo);
-static void MouseBlockHandler(BLOCK_HANDLER_ARGS);
-static void MouseWakeupHandler(WAKEUP_HANDLER_ARGS);
+static void MouseBlockHandler(void *data, void *waitTime);
+static void MouseWakeupHandler(void *data, int i);
 static void FlushButtons(MouseDevPtr pMse);
 
 static Bool SetupMouse(InputInfoPtr pInfo);
@@ -1952,18 +1940,11 @@ static CARD32
 buttonTimer(InputInfoPtr pInfo)
 {
     MouseDevPtr pMse;
-#if !HAVE_THREADED_INPUT
-    int sigstate;
-#endif
     int id;
 
     pMse = pInfo->private;
 
-#if HAVE_THREADED_INPUT
     input_lock();
-#else
-    sigstate = xf86BlockSIGIO ();
-#endif
 
     pMse->emulate3Pending = FALSE;
     if ((id = stateTab[pMse->emulateState][4][0]) != 0) {
@@ -1974,11 +1955,7 @@ buttonTimer(InputInfoPtr pInfo)
             "Got unexpected buttonTimer in state %d\n", pMse->emulateState);
     }
 
-#if HAVE_THREADED_INPUT
     input_unlock();
-#else
-    xf86UnblockSIGIO (sigstate);
-#endif
     return 0;
 }
 
@@ -2035,7 +2012,7 @@ Emulate3ButtonsSoft(InputInfoPtr pInfo)
 #endif
 }
 
-static void MouseBlockHandler(BLOCK_HANDLER_ARGS)
+static void MouseBlockHandler(void *data, void *waitTime)
 {
     InputInfoPtr    pInfo = (InputInfoPtr) data;
     MouseDevPtr     pMse = (MouseDevPtr) pInfo->private;
@@ -2050,7 +2027,7 @@ static void MouseBlockHandler(BLOCK_HANDLER_ARGS)
     }
 }
 
-static void MouseWakeupHandler(WAKEUP_HANDLER_ARGS)
+static void MouseWakeupHandler(void *data, int i)
 {
     InputInfoPtr    pInfo = (InputInfoPtr) data;
     MouseDevPtr     pMse = (MouseDevPtr) pInfo->private;
@@ -3208,9 +3185,6 @@ createProtoList(MouseDevPtr pMse, MouseProtocolID *protoList)
     unsigned char *para;
     mousePrivPtr mPriv = (mousePrivPtr)pMse->mousePriv;
     MouseProtocolID *tmplist = NULL;
-#if !HAVE_THREADED_INPUT
-    int blocked;
-#endif
 
     AP_DBGC(("Autoprobe: "));
     for (i = 0; i < mPriv->count; i++)
@@ -3222,11 +3196,7 @@ createProtoList(MouseDevPtr pMse, MouseProtocolID *protoList)
         return;
     }
 
-#if HAVE_THREADED_INPUT
     input_lock();
-#else
-    blocked = xf86BlockSIGIO ();
-#endif
 
     /* create a private copy first so we can write in the old list */
     if ((tmplist = malloc(sizeof(MouseProtocolID) * NUM_AUTOPROBE_PROTOS))){
@@ -3335,11 +3305,7 @@ createProtoList(MouseDevPtr pMse, MouseProtocolID *protoList)
         }
     }
 
-#if HAVE_THREADED_INPUT
     input_unlock();
-#else
-    xf86UnblockSIGIO(blocked);
-#endif
 
     mPriv->protoList[k] = PROT_UNKNOWN;
 
