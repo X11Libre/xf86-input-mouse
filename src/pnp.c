@@ -235,7 +235,7 @@ pnpgets(InputInfoPtr pInfo, char *buf, Bool *prePNP)
 {
     int i;
     char c;
-    pointer pnpOpts;
+    void *pnpOpts;
 
 #if 0
     /*

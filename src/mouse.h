@@ -228,12 +228,12 @@ typedef struct _MouseDevRec {
     int                 positiveZ;      /* button mask */
     int                 negativeW;      /* button mask */
     int                 positiveW;      /* button mask */
-    pointer             buffer;         /* usually an XISBuffer* */
+    void               *buffer;         /* usually an XISBuffer* */
     int                 protoBufTail;
     unsigned char       protoBuf[8];
     unsigned char       protoPara[8];
     unsigned char       inSync;         /* driver in sync with datastream */
-    pointer             mousePriv;      /* private area */
+    void               *mousePriv;      /* private area */
     InputInfoPtr        pInfo;
     Bool                emulate3Pending;/* timer waiting */
     CARD32              emulate3Expires;/* time to fire emulation code */
@@ -252,7 +252,7 @@ typedef struct _MouseDevRec {
     collectDataProc     collectData;
     dataGoodProc        dataGood;
     int                 angleOffset;
-    pointer             pDragLock;      /* drag lock area */
+    void               *pDragLock;      /* drag lock area */
     int                 xisbscale;      /* buffer size for 1 event */
     int                 wheelButtonTimeout;/* Timeout for the wheel button emulation */
     CARD32              wheelButtonExpires;
