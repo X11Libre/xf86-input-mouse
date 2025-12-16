@@ -50,7 +50,7 @@
 
 
   This document describes mouse support in the xf86-input-mouse driver
-  for the Xorg X server.   This driver is mainly used on non-Linux
+  for the XLibre X server.   This driver is mainly used on non-Linux
   operating systems such as BSD & Solaris, as modern Linux systems use
   the xf86-input-evdev or xf86-input-libinput drivers instead.
 
@@ -405,9 +405,6 @@
      available, that is because the X server does not have native
      support for that model of mouse and is using a ``compatible''
      protocol according to PnP information.
-
-     If you suspect this is the case with your mouse, please enter a bug
-     report at http://bugzilla.freedesktop.org, using the xorg product.
 
 
      USB mouse
