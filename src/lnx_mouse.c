@@ -2,10 +2,7 @@
 /*
  * Copyright 1999 by The XFree86 Project, Inc.
  */
-
-#ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
 
 #include <xorg-server.h>
 #include <X11/X.h>
