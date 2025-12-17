@@ -3628,11 +3628,6 @@ checkForErraticMovements(InputInfoPtr pInfo, int dx, int dy)
     if (!mPriv->goodCount)
         return;
 
-#if 0
-    if (abs(dx - mPriv->prevDx) > 300
-        || abs(dy - mPriv->prevDy) > 300)
-        AP_DBG(("erratic1 behaviour\n"));
-#endif
     if (abs(dx) > VAL_THRESHOLD) {
         if (sign(dx) == sign(mPriv->prevDx)) {
             mPriv->accDx += dx;
