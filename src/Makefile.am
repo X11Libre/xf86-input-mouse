@@ -42,11 +42,3 @@ mouse_drv_la_SOURCES = \
 	@OS_MOUSE_NAME@_mouse.c
 
 EXTRA_DIST = $(OS_SRCS)
-
-if LINT
-ALL_LINT_FLAGS=$(LINT_FLAGS) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
-                $(AM_CPPFLAGS) $(CPPFLAGS)
-
-lint:
-	$(LINT) $(ALL_LINT_FLAGS) $(mouse_drv_la_SOURCES)
-endif LINT
