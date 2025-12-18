@@ -88,7 +88,6 @@ esac
 AC_SUBST([OS_MOUSE_NAME])
 
 AC_CONFIG_FILES([Makefile
-                 xorg-mouse.pc
                  include/Makefile
                  src/Makefile
                  man/Makefile])

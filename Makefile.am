@@ -26,9 +26,6 @@ DISTCHECK_CONFIGURE_FLAGS = --with-xorg-module-dir='$${libdir}/xorg/modules' \
 SUBDIRS = include src man
 MAINTAINERCLEANFILES = ChangeLog INSTALL
 
-pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = xorg-mouse.pc
-
 .PHONY: ChangeLog INSTALL
 
 INSTALL:
