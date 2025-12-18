@@ -87,9 +87,6 @@ case $host_os in
 esac
 AC_SUBST([OS_MOUSE_NAME])
 
-DRIVER_NAME=mouse
-AC_SUBST([DRIVER_NAME])
-
 AC_CONFIG_FILES([Makefile
                  xorg-mouse.pc
                  include/Makefile

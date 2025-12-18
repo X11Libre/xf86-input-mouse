@@ -26,15 +26,15 @@ AM_CPPFLAGS = -I$(top_srcdir)/include $(XORG_CFLAGS)
 # -avoid-version prevents gratuitous .0.0.0 version numbers on the end
 # _ladir passes a dummy rpath to libtool so the thing will actually link
 # TODO: -nostdlib/-Bstatic/-lgcc platform magic, not installing the .a, etc.
-@DRIVER_NAME@_drv_la_LTLIBRARIES = @DRIVER_NAME@_drv.la
-@DRIVER_NAME@_drv_la_LDFLAGS = -module -avoid-version
-@DRIVER_NAME@_drv_ladir = @inputdir@
+mouse_drv_la_LTLIBRARIES = mouse_drv.la
+mouse_drv_la_LDFLAGS = -module -avoid-version
+mouse_drv_ladir = @inputdir@
 
 # We have to list all the mouse drivers here, even if we don't build them, so
 # they get included in distcheck.
 OS_SRCS = bsd_mouse.c hurd_mouse.c lnx_mouse.c sun_mouse.c
 
-@DRIVER_NAME@_drv_la_SOURCES = \
+mouse_drv_la_SOURCES = \
 	mouse.c \
 	mouse.h \
 	pnp.c \
@@ -48,5 +48,5 @@ ALL_LINT_FLAGS=$(LINT_FLAGS) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
                 $(AM_CPPFLAGS) $(CPPFLAGS)
 
 lint:
-	$(LINT) $(ALL_LINT_FLAGS) $(@DRIVER_NAME@_drv_la_SOURCES)
+	$(LINT) $(ALL_LINT_FLAGS) $(mouse_drv_la_SOURCES)
 endif LINT
