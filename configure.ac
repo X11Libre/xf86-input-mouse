@@ -85,8 +85,5 @@ case $host_os in
 esac
 AC_SUBST([OS_MOUSE_NAME])
 
-AC_CONFIG_FILES([Makefile
-                 include/Makefile
-                 src/Makefile
-                 man/Makefile])
+AC_CONFIG_FILES([Makefile include/Makefile src/Makefile man/Makefile])
 AC_OUTPUT
