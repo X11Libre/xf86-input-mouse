@@ -27,6 +27,7 @@ AC_INIT([xlibre-xf86-input-mouse],
         [https://github.com/X11Libre/xf86-input-mouse/issues],
         [xlibre-xf86-input-mouse])
 AC_CONFIG_SRCDIR([Makefile.am])
+AC_USE_SYSTEM_EXTENSIONS
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_AUX_DIR(.)
 
