@@ -3719,6 +3719,11 @@ static void *xf86MousePlug(void *module, void *options, int *errmaj, int *errmin
     return module;
 }
 
+#define MOUSE_VERSION_MAJOR	PACKAGE_VERSION_MAJOR
+#define MOUSE_VERSION_MINOR	PACKAGE_VERSION_MINOR
+#define MOUSE_VERSION_PATCH	PACKAGE_VERSION_PATCHLEVEL
+#define MOUSE_VERSION_SUFFIX	PACKAGE_VERSION_SUFFIX
+
 static XF86ModuleVersionInfo xf86MouseVersionRec =
 {
     "mouse",
@@ -3726,7 +3731,7 @@ static XF86ModuleVersionInfo xf86MouseVersionRec =
     MODINFOSTRING1,
     MODINFOSTRING2,
     XORG_VERSION_CURRENT,
-    PACKAGE_VERSION_MAJOR, PACKAGE_VERSION_MINOR, PACKAGE_VERSION_PATCHLEVEL,
+    MOUSE_VERSION_MAJOR, MOUSE_VERSION_MINOR, MOUSE_VERSION_PATCH,
     ABI_CLASS_XINPUT,
     ABI_XINPUT_VERSION,
     MOD_CLASS_XINPUT,
@@ -3739,6 +3744,10 @@ _X_EXPORT XF86ModuleData mouseModuleData = {
     xf86MousePlug,
     xf86MouseUnplug
 };
+
+#ifdef XF86_MODULE_VERSION_SUFFIX
+XF86_MODULE_VERSION_SUFFIX(mouse, MOUSE_VERSION_SUFFIX);
+#endif
 
 /*
   Look at hitachi device stuff.
